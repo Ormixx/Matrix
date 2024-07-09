@@ -11,7 +11,10 @@ matrix_t *mat_new(int r, int c){
     matrix_t *m = malloc (sizeof (struct matrix));
     m->rows = r;
     m->cols = c;
-    m->mat = malloc(r*sizeof(*m->mat));
+    m->mat = malloc(r * sizeof(double*));
+    for(int i = 0; i < r; i++) {
+        m->mat[i] = calloc(c, sizeof(double));
+    }
     for(int i=0;i < r;++i)
         m->mat[i] = calloc(c, sizeof(**m->mat));
     return m;
