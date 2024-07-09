@@ -34,7 +34,7 @@ matrix_t *mat_multiply(matrix_t *m1, matrix_t *m2){
     for(int i = 0; i < m1->rows; i++){
         for(int j = 0; j < m2->cols; j++){
             for(int k = 0; k < m1->cols; k++){
-                result->mat[i][j] += m1->mat[i][k] * m2->mat[k][j];
+                result->mat[j][i] += m1->mat[i][k] * m2->mat[k][j];
             }
         }
     }
