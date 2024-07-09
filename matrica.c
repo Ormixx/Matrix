@@ -14,22 +14,26 @@ matrix_t *mat_new(int r, int c){
     m->rows = r;
     m->cols = c;
     m->mat = malloc(r*sizeof(*m->mat));
-    for(int i=0;i<c;++i)
+    for(int i=0;i < r;++i)
         m->mat[i] = calloc(c, sizeof(**m->mat));
     return m;
 }
 
-matrix_t *mat_frd(char* fname){
-    int r = 0, c = 0;
-    matrix_t *mfile = NULL;
-    FILE * matrix_file = fopen(fname, "r");
-    fscanf(matrix_file, "%d %d", &r, &c);
-    mfile = mat_new(r, c);
-    for(r = 0; r < mfile->rows; ++r)
-        for(c = 0; c< mfile->cols; ++c)
-            fscanf(matrix_file, "%" SCN_MAT, &mfile->mat[r][c]);
+matrix_t *mat_multiply(matrix_t *m1, matrix_t *m2){
+    if(m1->cols != m2->rows){
+        printf("Cannot multiply matrices. Invalid dimensions.\n");
+        return NULL;
+    }
 
-    fclose(matrix_file);
+    matrix_t *result = mat_new(m1->rows, m2->cols);
 
-    return mfile;
+    for(int i = 0; i < m1->rows; i++){
+        for(int j = 0; j < m2->cols; j++){
+            for(int k = 0; k < m1->cols; k++){
+                result->mat[i][j] += m1->mat[i][k] * m2->mat[k][j];
+            }
+        }
+    }
+
+    return result;
 }
