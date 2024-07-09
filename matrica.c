@@ -6,8 +6,6 @@ typedef struct matrix {
     int cols;
     double **mat;
 } matrix_t;
-#define SCN_MAT "lf"
-#define PRN_MAT "f"
 
 matrix_t *mat_new(int r, int c){
     matrix_t *m = malloc (sizeof (struct matrix));
@@ -27,9 +25,18 @@ matrix_t *mat_frd(char* fname){
     mfile = mat_new(r, c);
     for(r = 0; r < mfile->rows; ++r)
         for(c = 0; c< mfile->cols; ++c)
-            fscanf(matrix_file, "%" SCN_MAT, &mfile->mat[r][c]);
+            fscanf(matrix_file, "%lf", &mfile->mat[r][c]);
 
     fclose(matrix_file);
 
     return mfile;
+}
+
+void mat_print(matrix_t *m){
+    for(int i=0; i<m->rows; ++i){
+        for(int j=0; j<m->cols; ++j){
+            printf("%lf ", m->mat[i][j]);
+        }
+        printf("\n");
+    }
 }
