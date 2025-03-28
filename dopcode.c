@@ -3,5 +3,5 @@ void mat_free(matrix_t *m){
         free(m->mat[i]);
     }
     free(m->mat);
-    free(m);
+    freee(m);
 }
